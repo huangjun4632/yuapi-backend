@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * 查询请求
  *
- * @author yupi
+ * @author huangjun
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -57,6 +57,10 @@ public class InterfaceInfoQueryRequest extends PageRequest implements Serializab
      * 请求类型
      */
     private String method;
+    /**
+     * 请求参数
+     */
+    private String requestParams;
 
     /**
      * 创建人

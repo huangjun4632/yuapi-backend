@@ -3,7 +3,7 @@ package com.yupi.project.constant;
 /**
  * 用户常量
  *
- * @author yupi
+ * @author huangjun
  */
 public interface UserConstant {
 

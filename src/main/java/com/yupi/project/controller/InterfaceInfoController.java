@@ -2,33 +2,33 @@ package com.yupi.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
+import com.huangjun.huangjunclientsdk.client.HuangjunApiClient;
 import com.yupi.project.annotation.AuthCheck;
-import com.yupi.project.common.BaseResponse;
-import com.yupi.project.common.DeleteRequest;
-import com.yupi.project.common.ErrorCode;
-import com.yupi.project.common.ResultUtils;
+import com.yupi.project.common.*;
 import com.yupi.project.constant.CommonConstant;
 import com.yupi.project.exception.BusinessException;
-import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoAddRequest;
+import com.yupi.project.model.dto.interfaceinfo.Idrequest;
+import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.yupi.project.model.entity.InterfaceInfo;
 import com.yupi.project.model.entity.User;
+import com.yupi.project.model.enums.InterfaceInfoStatusEnum;
 import com.yupi.project.service.InterfaceInfoService;
 import com.yupi.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
 
 /**
- * 帖子接口
+ * 接口管理
  *
- * @author yupi
  */
 @RestController
 @RequestMapping("/interfaceInfo")
@@ -41,6 +41,9 @@ public class InterfaceInfoController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private HuangjunApiClient huangjunApiClient;
+
     // region 增删改查
 
     /**
@@ -51,7 +54,8 @@ public class InterfaceInfoController {
      * @return
      */
     @PostMapping("/add")
-    public BaseResponse<Long> addInterfaceInfo (@RequestBody InterfaceInfoAddRequest interfaceInfoAddRequest, HttpServletRequest request) {
+    public BaseResponse<Long> addInterfaceInfo (@RequestBody Idrequest interfaceInfoAddRequest,
+                                                HttpServletRequest request) {
         if (interfaceInfoAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -194,6 +198,114 @@ public class InterfaceInfoController {
         return ResultUtils.success(interfaceInfoPage);
     }
 
+
+
+    /**
+     * 发布
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/online")
+    @AuthCheck
+    public BaseResponse<Boolean> onlineInterfaceInfo (@RequestBody IdRequest idRequest,
+                                                      HttpServletRequest request) {
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 判断是否存在
+        long id = idRequest.getId();
+        InterfaceInfo  oldInterfaceInfo  = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo  == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        com.huangjun.huangjunclientsdk.model.entity.User user = new com.huangjun.huangjunclientsdk.model.entity.User();
+        user.setUserName("saber");
+        String userNameByPost = huangjunApiClient.getUserNameByPost(user);
+        if (StringUtils.isBlank(userNameByPost)){
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,"接口校验失败");
+        }
+
+        InterfaceInfo  interfaceInfo = new InterfaceInfo ();
+        interfaceInfo.setUserId(id);
+        interfaceInfo.setStatus(InterfaceInfoStatusEnum.ONLINE.getValue());
+        BeanUtils.copyProperties(idRequest, interfaceInfo);
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * 下线
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/offline")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> offlineInterfaceInfo (@RequestBody IdRequest idRequest,
+                                                HttpServletRequest request) {
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 判断是否存在
+        long id = idRequest.getId();
+        InterfaceInfo  oldInterfaceInfo  = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo  == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        com.huangjun.huangjunclientsdk.model.entity.User user = new com.huangjun.huangjunclientsdk.model.entity.User();
+        user.setUserName("saber");
+        String userNameByPost = huangjunApiClient.getUserNameByPost(user);
+        if (StringUtils.isBlank(userNameByPost)){
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,"接口校验失败");
+        }
+
+        InterfaceInfo  interfaceInfo = new InterfaceInfo ();
+        interfaceInfo.setUserId(id);
+        interfaceInfo.setStatus(InterfaceInfoStatusEnum.OFFLINE.getValue());
+        BeanUtils.copyProperties(idRequest, interfaceInfo);
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * 测试调用
+     *
+     * @param interfaceInfoInvokeRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+                                                       HttpServletRequest request) {
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 获取接口id
+        long id = interfaceInfoInvokeRequest.getId();
+        // 获取用户请求参数
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        //判断接口是否存在
+        InterfaceInfo  oldInterfaceInfo  = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo  == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        //检查接口状态是否为下线状态
+        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口已经关闭");
+        }
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+        Gson gson = new Gson();
+        com.huangjun.huangjunclientsdk.model.entity.User user =
+                gson.fromJson(userRequestParams, com.huangjun.huangjunclientsdk.model.entity.User.class);
+        HuangjunApiClient tempApiClient = new HuangjunApiClient(accessKey,secretKey);
+        String result = tempApiClient.getUserNameByPost(user);
+        return ResultUtils.success(result);
+    }
     // endregion
 
 }

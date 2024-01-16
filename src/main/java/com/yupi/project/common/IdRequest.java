@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author huangjun
  */
 @Data
-public class DeleteRequest implements Serializable {
+public class IdRequest implements Serializable {
     /**
      * id
      */

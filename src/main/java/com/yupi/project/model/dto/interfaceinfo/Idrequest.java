@@ -1,12 +1,8 @@
 package com.yupi.project.model.dto.interfaceinfo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 创建请求
@@ -14,7 +10,7 @@ import java.util.Date;
  * @TableName product
  */
 @Data
-public class InterfaceInfoAddRequest implements Serializable {
+public class Idrequest implements Serializable {
 
 
     /**
@@ -32,6 +28,10 @@ public class InterfaceInfoAddRequest implements Serializable {
      */
     private String url;
 
+    /**
+     * 请求参数
+     */
+    private String requestParams;
     /**
      * 请求头
      */
