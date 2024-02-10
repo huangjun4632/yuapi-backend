@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
 
 /**
  * 接口管理
@@ -173,7 +172,8 @@ public class InterfaceInfoController {
      * @return
      */
     @GetMapping("/list/page")
-    public BaseResponse<Page<InterfaceInfo >> listInterfaceInfoByPage(InterfaceInfoQueryRequest interfaceInfoQueryRequest, HttpServletRequest request) {
+    public BaseResponse<Page<InterfaceInfo >> listInterfaceInfoByPage(InterfaceInfoQueryRequest interfaceInfoQueryRequest,
+                                                                      HttpServletRequest request) {
         if (interfaceInfoQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -221,7 +221,7 @@ public class InterfaceInfoController {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         com.huangjun.huangjunclientsdk.model.entity.User user = new com.huangjun.huangjunclientsdk.model.entity.User();
-        user.setUserName("saber");
+        user.setUserName("test");
         String userNameByPost = huangjunApiClient.getUserNameByPost(user);
         if (StringUtils.isBlank(userNameByPost)){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR,"接口校验失败");
