@@ -36,3 +36,25 @@ huangjun:
   client:
     access-key: accessKey
     secret-key: abcdefgh
+# application.yml (Spring Boot)
+dubbo:
+  application:
+    # 应用名称
+    name: dubbo-springboot-demo-provider
+    qos:
+      enable: true
+      port: 33331
+      accept:
+        foreign:
+          ip: true
+    # 协议
+  protocol:
+    name: dubbo
+    # 端口-1，客随机设置端口
+    path: 20881
+  # 注册中心 地址
+  registry:
+    id: nacos-registry
+    # nacos://localhost:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
+    address: nacos://localhost:8848
+
