@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yupi.project.common.ErrorCode;
 import com.yupi.project.exception.BusinessException;
 import com.yupi.project.mapper.UserMapper;
-import com.yupi.project.model.entity.User;
 import com.yupi.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import static com.yupi.project.constant.UserConstant.ADMIN_ROLE;
 import static com.yupi.project.constant.UserConstant.USER_LOGIN_STATE;
+import com.yupi.yuapicommon.model.entity.User;
 
 
 /**

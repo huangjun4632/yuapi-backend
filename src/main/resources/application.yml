@@ -41,12 +41,7 @@ dubbo:
   application:
     # 应用名称
     name: dubbo-springboot-demo-provider
-    qos:
-      enable: true
-      port: 33331
-      accept:
-        foreign:
-          ip: true
+    qosPort: 11114
     # 协议
   protocol:
     name: dubbo

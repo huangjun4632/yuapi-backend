@@ -1,7 +1,8 @@
 package com.yupi.project.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yupi.project.model.entity.Post;
+import com.yupi.yuapicommon.model.entity.Post;
+
 
 /**
  * @author huangjunli

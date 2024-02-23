@@ -1,10 +1,11 @@
 package com.yupi.project.service.impl;
 
-import com.yupi.project.service.UserInterfaceInfoService;
+import com.yupi.yuapicommon.service.UserInterfaceInfoService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
+
 @SpringBootTest
 public class UserInterfaceInfoServiceImplTest {
 

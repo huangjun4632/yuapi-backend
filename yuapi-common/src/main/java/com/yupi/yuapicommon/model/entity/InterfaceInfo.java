@@ -1,4 +1,4 @@
-package com.yupi.project.model.entity;
+package com.yupi.yuapicommon.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

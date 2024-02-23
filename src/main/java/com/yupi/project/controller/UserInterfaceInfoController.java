@@ -2,21 +2,19 @@ package com.yupi.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.gson.Gson;
 import com.huangjun.huangjunclientsdk.client.HuangjunApiClient;
 import com.yupi.project.annotation.AuthCheck;
 import com.yupi.project.common.*;
 import com.yupi.project.constant.CommonConstant;
 import com.yupi.project.exception.BusinessException;
-import com.yupi.project.model.dto.interfaceinfo.Idrequest;
-import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.yupi.project.model.dto.userinterfaceinfo.UserInterfaceInfoAddRequest;
-import com.yupi.project.model.entity.User;
-import com.yupi.project.model.entity.UserInterfaceInfo;
-import com.yupi.project.service.UserInterfaceInfoService;
 import com.yupi.project.service.UserService;
+import com.yupi.yuapicommon.model.entity.User;
+import com.yupi.yuapicommon.model.entity.UserInterfaceInfo;
+import com.yupi.yuapicommon.service.InnterUserInterfaceInfoService;
+import com.yupi.yuapicommon.service.UserInterfaceInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -58,7 +56,7 @@ public class UserInterfaceInfoController {
         if (userInterfaceInfoAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        UserInterfaceInfo  userInterfaceInfo = new UserInterfaceInfo ();
+        UserInterfaceInfo userInterfaceInfo = new UserInterfaceInfo ();
         BeanUtils.copyProperties(userInterfaceInfoAddRequest, userInterfaceInfo);
         // 校验
         userInterfaceInfoService.validUserInterfaceInfo (userInterfaceInfo, true);

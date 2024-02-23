@@ -18,6 +18,12 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+        <!--common-->
+        <dependency>
+            <groupId>com.yupi</groupId>
+            <artifactId>yuapi-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <!--dubbo-->
         <dependency>
             <groupId>org.apache.dubbo</groupId>

@@ -1,8 +1,10 @@
-package com.yupi.project.service;
+package com.yupi.yuapicommon.service;
+
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yupi.project.model.entity.UserInterfaceInfo;
+import com.yupi.yuapicommon.model.entity.InterfaceInfo;
+import com.yupi.yuapicommon.model.entity.UserInterfaceInfo;
 
 
 /**
@@ -11,7 +13,7 @@ import com.yupi.project.model.entity.UserInterfaceInfo;
 * @createDate 2024-02-09 17:10:48
 */
 public interface UserInterfaceInfoService extends IService<UserInterfaceInfo> {
-     void validUserInterfaceInfo(UserInterfaceInfo userInterfaceInfo,boolean add);
+
 
      /**
       * 统计调用次数
@@ -20,4 +22,6 @@ public interface UserInterfaceInfoService extends IService<UserInterfaceInfo> {
       * @return
       */
      boolean invokeCount(long interfaceInfoId , long userId);
+
+     void validUserInterfaceInfo(UserInterfaceInfo userInterfaceInfo,boolean add);
 }

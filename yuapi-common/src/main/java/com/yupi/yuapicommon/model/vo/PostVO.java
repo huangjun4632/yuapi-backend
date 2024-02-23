@@ -1,6 +1,7 @@
-package com.yupi.project.model.vo;
+package com.yupi.yuapicommon.model.vo;
 
-import com.yupi.project.model.entity.Post;
+
+import com.yupi.yuapicommon.model.entity.Post;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

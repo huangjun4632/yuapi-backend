@@ -12,11 +12,11 @@ import com.yupi.project.model.dto.interfaceinfo.Idrequest;
 import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.yupi.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
-import com.yupi.project.model.entity.InterfaceInfo;
-import com.yupi.project.model.entity.User;
-import com.yupi.project.model.enums.InterfaceInfoStatusEnum;
 import com.yupi.project.service.InterfaceInfoService;
 import com.yupi.project.service.UserService;
+import com.yupi.yuapicommon.model.entity.InterfaceInfo;
+import com.yupi.yuapicommon.model.entity.User;
+import com.yupi.yuapicommon.model.enums.InterfaceInfoStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -58,7 +58,7 @@ public class InterfaceInfoController {
         if (interfaceInfoAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        InterfaceInfo  interfaceInfo = new InterfaceInfo ();
+        InterfaceInfo interfaceInfo = new InterfaceInfo ();
         BeanUtils.copyProperties(interfaceInfoAddRequest, interfaceInfo);
         // 校验
         interfaceInfoService.validInterfaceInfo (interfaceInfo, true);
