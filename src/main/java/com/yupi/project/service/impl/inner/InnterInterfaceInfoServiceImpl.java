@@ -1,10 +1,12 @@
 package com.yupi.project.service.impl.inner;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.yupi.project.common.ErrorCode;
 import com.yupi.project.exception.BusinessException;
 import com.yupi.project.mapper.InterfaceInfoMapper;
 import com.yupi.yuapicommon.model.entity.InterfaceInfo;
+import com.yupi.yuapicommon.model.entity.UserInterfaceInfo;
 import com.yupi.yuapicommon.service.InnterInterfaceInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -25,4 +27,6 @@ public class InnterInterfaceInfoServiceImpl implements InnterInterfaceInfoServic
                 .eq(InterfaceInfo::getMethod,method);
         return interfaceInfoMapper.selectOne(wrapper);
     }
+
+
 }

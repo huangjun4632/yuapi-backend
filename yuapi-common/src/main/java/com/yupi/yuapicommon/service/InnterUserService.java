@@ -12,11 +12,10 @@ import com.yupi.yuapicommon.model.entity.User;
  */
 public interface InnterUserService  {
     /**
-     * 数据库查是否已分配给用户ak，sk
+     * 数据库查用户ak是否一致
      * @param accessKey
-     * @param secretKey
      * @return
      */
-    User getInvokeUser(String accessKey , String secretKey);
+    User getInvokeUser(String accessKey );
 
 }

@@ -15,14 +15,15 @@ import javax.annotation.Resource;
 public class InnterUserServiceImpl implements InnterUserService {
     @Resource
     private UserMapper userMapper;
+
     @Override
-    public User getInvokeUser(String accessKey, String secretKey) {
-       if (StringUtils.isAnyBlank(accessKey,secretKey)){
+    public User getInvokeUser(String accessKey) {
+       if (StringUtils.isAnyBlank(accessKey)){
            throw new BusinessException(ErrorCode.PARAMS_ERROR);
        }
         LambdaUpdateWrapper<User> queryWrapper = new LambdaUpdateWrapper<>();
-       queryWrapper.eq(User::getAccessKey,accessKey)
-                       .eq(User::getSecretKey,secretKey);
+       queryWrapper.eq(User::getAccessKey,accessKey);
         return userMapper.selectOne(queryWrapper);
     }
+
 }

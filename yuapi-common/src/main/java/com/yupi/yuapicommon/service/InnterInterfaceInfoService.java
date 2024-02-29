@@ -18,4 +18,6 @@ public interface InnterInterfaceInfoService  {
      * @return
      */
     InterfaceInfo getInterfaceInfo(String path,String method);
+
+
 }

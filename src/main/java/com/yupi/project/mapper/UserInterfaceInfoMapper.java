@@ -3,6 +3,8 @@ package com.yupi.project.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yupi.yuapicommon.model.entity.UserInterfaceInfo;
 
+import java.util.List;
+
 
 /**
 * @author 46325
@@ -11,7 +13,8 @@ import com.yupi.yuapicommon.model.entity.UserInterfaceInfo;
 * @Entity com.yupi.project.model.entity.UserInterfaceInfo
 */
 public interface UserInterfaceInfoMapper extends BaseMapper<UserInterfaceInfo> {
-
+    //select interfaceInfoId,sum(totalNum) as totalNum  from user_interface_info group by interfaceInfoId order by totalNum desc limit 3
+    List<UserInterfaceInfo> listTopInvokeFaceInfo(int limit);
 }
 
 
